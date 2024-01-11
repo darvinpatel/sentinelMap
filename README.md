@@ -36,13 +36,13 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 ## Step 1: Create FREE Azure account: [Azure](https://azure.microsoft.com/en-us/free/ "Azure")
 - Click on “Go to the Azure Portal” or go to `portal.azure.com` once you create your account.
 
-![](images/img2.png)
+![](images/img2.PNG)
 
 ## Step 2: Create our honey pot virtual machine
 - In the search bar of the “Quickstart Center” page > search and click virtual machine 
 - This will be the honey pot virtual machine made to entice attackers from all over the world
 
-![](images/img3.png)
+![](images/img3.PNG)
 
 ## Step 3: On the “virtual machines” page click Create > Azure virtual machine 
 - Edit the virtual machine as follows:
@@ -55,8 +55,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Create a username and password - **don’t forget credentials**
 - Finally, check confirm box - leaving the rest in their default options  
 
-![](images/img10.png)
-![](images/img11.png)
+![](images/img10.PNG)
+![](images/img11.PNG)
 
 ## Step 4: Click > Next: Disk but leave it as is, click to continue to Networking
 -  Under *NIC network security group* select > Advance and under *Configure network security group* select Create new
@@ -69,15 +69,15 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Leave the rest of the settings as default
 - Click Add > OK > Review + create - wait a bit to load and click Create
 
-![](images/img12.png)
+![](images/img12.PNG)
 
 > The point of this new firewall rule is to allow any traffic from anywhere.  This will make our virtual machine very discoverable. 
 
 ## Step 5: Create Log Analytics workspace
 - As we wait for our vm to deploy, go back to the search bar and search and click *Log Analytics workspaces*
 
-![](images/img13.png)
-![](images/img14.png)
+![](images/img13.PNG)
+![](images/img14.PNG)
 
 > The purpose  of this workspace is to ingest logs from our vm. Additionally, we will create our own custom logs that will contain geographic information on who is attacking us. Later, our MS SIEM will feed logs into here.
 
@@ -92,14 +92,14 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Back in the search bar search and click *Microsoft Defender for Cloud*
 - Once on the dashboard click > Environment Settings > (through the drop down menus) > law-honeypot1
 
-![](images/img15.png)
-![](images/img16.png)
+![](images/img15.PNG)
+![](images/img16.PNG)
 
 ## Step 6B: Under law-honeypot1 select *Defender Plans* and enable *Servers* ON and *SQL servers on machines* OFF. With *Cloud Security Posture Management* ON. Hit save.
 - Under *Data Collection* tab select *All Events*. Hit save.
 
-![](images/img17.png)
-![](images/img18.png)
+![](images/img17.PNG)
+![](images/img18.PNG)
 
 
 ## Step 7: connect Log Analytics workspace to our vm
@@ -108,22 +108,22 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Click **connect**, after clicking honeypot-vm
 - It will take some time to successfully connect; you should get a message confirming connection.
 
-![](images/img19.png)
-![](images/img20.png)
+![](images/img19.PNG)
+![](images/img20.PNG)
 
 ## Step 8: Add Microsoft Sentinel to our workspace 
 - In search bar find **Microsoft Sentinel**
 - Click Create Microsoft Sentinel > select law-honeypot1 > Add
 - This will also take some time
 
-![](images/img21.png)
-![](images/img22.png)
+![](images/img21.PNG)
+![](images/img22.PNG)
 
 ## Step 9A: Log into vm through host machine
 - Through the search bar, find our honeypot-vm > copy the Public IP address (highlighted here on the right)
 
-![](images/img23.png)
-![](images/img24.png)
+![](images/img23.PNG)
+![](images/img24.PNG)
 
 
 ## Step 9B: RDP from host Windows machine
@@ -137,7 +137,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Accept the certificate warning
 - You should be logged into the vm when you see “Remote Desktop Connection” at the top of the screen.
 
-![](images/img25.png)
+![](images/img25.PNG)
 
 
 ## Step 10A: Set up vm and explore 
@@ -146,8 +146,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Search and click *Event Viewer*
 - Click Windows Logs > Security and find the Audit Failure log (our failed login attempt; if you don’t see it at first filter current log by “Audit Failure” found to the left)
 
-![](images/img26.png)
-![](images/img27.png)
+![](images/img26.PNG)
+![](images/img27.PNG)
 
 > The Source Network Address will represent the attacker’s IPs and eventually where on Earth they are attacking us!
 > But in order to do this we need to send this network address to a third party API… but more on that later.
@@ -161,8 +161,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Under Public Profile > Firewall state: OFF
 - Try to ping vm again from your **host** machine - this should now work!
 
-![](images/img29.png)
-![](images/img30.png)
+![](images/img29.PNG)
+![](images/img30.PNG)
 
 ## Step 11A: Retrieve Powershell script: [Script](https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom_Security_Log_Exporter.ps1 "Script")
 - Open Powershell ISE
@@ -172,8 +172,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Copy and paste *your* API key in your Powershell script `$API_KEY = “_your API key_”`
 - Save file.
 
-![](images/img28.png)
-![](images/img31.png)
+![](images/img28.PNG)
+![](images/img31.PNG)
 
 > Quick explanation of script: the script will parse through the security event logs (Audit Failure/failed login logs we looked at earlier) and grab IP information. The script then **passes** the IP thorough the API and correlates the info into longitude and latitude, giving us specific geographical information. 
 
@@ -182,15 +182,15 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - You should receive purple logs indicating latitude / latitude of failed logins (some sample logs and some log when we failed to log in)
 > NOTE: Keep Powershell script running in the backgroup. We need to continously feed our log repository information.
 
-![](images/img32.png)
-![](images/img33.png)
-![](images/img34.png)
-![](images/img35.png)
-![](images/img36.png)
-![](images/img37.png)
-![](images/img38.png)
-![](images/img39.png)
-![](images/img40.png)
+![](images/img32.PNG)
+![](images/img33.PNG)
+![](images/img34.PNG)
+![](images/img35.PNG)
+![](images/img36.PNG)
+![](images/img37.PNG)
+![](images/img38.PNG)
+![](images/img39.PNG)
+![](images/img40.PNG)
 
 
 ## Step 12A: Create custom geolocation log in Log Analytics Workspace.
@@ -198,8 +198,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Search and click Log Analytics Workspace > law-honeypot1 > custom logs > + Add custom log
 - We need to upload a sample log to “train” log analytics on what to look for.
 
-![](images/img41.png)
-![](images/img42.png)
+![](images/img41.PNG)
+![](images/img42.PNG)
 
 ## Step 12B: Custom geolocation log (cont.)
 - Our sample logs are in our **honeypot-vm**.
@@ -208,24 +208,24 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Back on our **host machine**, open notes and paste our sample logs.
 - Save the file in a log or txt format and upload it in the *Create a custom log* page. Click next and you should see the sample logs.
 
-![](images/img43.png)
+![](images/img43.PNG)
 
 ## Step 12C: Click next and under Collection Paths > under Type > Windows, under Path write C:\ProgramData\failed_rdp.log
 
-![](images/img44.png)
+![](images/img44.PNG)
 
 ## Step 12D: Click next > under Details > Custom log name write FAILED_RDP_WITH_GEO (CL will be added to the end)
 - Click next > Create >Review + Create
 - Let’s go back to log analytics and check if Azure is connected and listening to our vm.
 
-![](images/img45.png)
+![](images/img45.PNG)
 
 ## Step 12E: Secure connection between honeypot-vm and log analytics 
 - Under law-honeypot1 > General > Logs > search SecurityEvent and click blue Run button.
 - Give it a moment, and voila! It returns the same security logs window from our honeypot-vm’s Event Viewer.
 - Give it some time and search our custom: `FAILED_RDP_WITH_GEO_CL will` it will return our sample logs.
 
-![](images/img46.png)
+![](images/img46.PNG)
 
  
 ## Step 13A: Overview: Extract geo-data from the RawData of our sample logs.
@@ -235,8 +235,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - It sounds a bit abstract now, but bare with me.
 > NOTE: If you step away and come back to this lab after a day or two make sure to change the *Time range* accordingly. 
 
-![](images/img47.png)
-![](images/img48.png)
+![](images/img47.PNG)
+![](images/img48.PNG)
 
 
 ## Step 13B: Extract and categorize data from sample log
@@ -247,7 +247,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - To the right, check that the SIEM is selecting the correct values on each sample log.
 - Click save extraction. 
 
-![](images/img49.png)
+![](images/img49.PNG)
 
 > This is an important step because we are ‘training’ our SIEM what to look out for. 
 
@@ -264,7 +264,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Take a look at the search result, it should now highlight the correct longitude value.
 - Continue to train our SIEM and correct a few more search results.
 
-![](images/img50.png)
+![](images/img50.PNG)
 
 ## Step 13D: Even more data extraction from sample log!
 - The same process to when we extracted latitude and longitude values.
@@ -283,7 +283,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Under setting columns to the left click Custom Logs > Custom fields
 - Your custom fields we just made should look something like this:
 
-![](images/img51.png)
+![](images/img51.PNG)
 
 > A couple of notes before moving on: **make sure our Powershell script log_exporter.log is running**. The script will continue to feed our SIEM with fresh new logs. 
 
@@ -299,7 +299,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 | where destinationhost_CF != "samplehost"
 | where sourcehost_CF != ""`
 
-![](images/img52.png)
+![](images/img52.PNG)
 
 
 > This will parse through the failed RDP’s logs and return to us location information through our custom fields we created.
@@ -323,10 +323,10 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Pretty rad - **if you take a look at the actual logs you can see source IP, time, country, user name and other details!**
 - Remember too, these logs are only reporting back failed RDP attempts… who knows what other attacks are being attempted.  
 
-![](images/img53.png)
-![](images/img54.png)
-![](images/img55.png)
-![](images/img56.png)
+![](images/img53.PNG)
+![](images/img54.PNG)
+![](images/img55.PNG)
+![](images/img56.PNG)
 
 
 ## Step 14C: Finish/save threat visualization 
@@ -337,8 +337,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - You can hit the refresh icon near the top of the map (**make sure Powershell script is running**) to load more logs into the map
 - Also, you can click Auto refresh ON to refresh every so often.
 
-![](images/img57.png)
-![](images/img58.png)
+![](images/img57.PNG)
+![](images/img58.PNG)
 
 ## FINAL STEP: Deprovision resources 
 - Once you are done with the lab delete the resources, otherwise they will eat away from your free credit (deprovisioning is also a good thing to keep in mind at the enterprise level)
