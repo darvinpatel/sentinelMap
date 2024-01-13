@@ -167,7 +167,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 ![](images/img30.PNG)
 > After when Firewalls were turned off intentionally
 
-## Step 11A: Retrieve Powershell script: [Script](https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom_Security_Log_Exporter.ps1 "Script")
+## Step 11A: Retrieve Powershell script: [Script](https://github.com/darvinpatel/sentinelMap/blob/main/Custom_Security_Log_Exporter.ps1 "Script")
 - Open Powershell ISE
 - For convenience you can copy/paste the code into a new ps1 file and save it to the desktop of the **honeypot-vm** (remember to see vm IP at the top)
 - You will also need an API key, get here: [API key](https://ipgeolocation.io/ "API key")
