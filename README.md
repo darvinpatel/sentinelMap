@@ -82,20 +82,20 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 > The purpose  of this workspace is to ingest logs from our vm. Additionally, we will create our own custom logs that will contain geographic information on who is attacking us. Later, our MS SIEM will feed logs into here.
 
 - Select the blue Create log analytics workspace button
-- Under the Basics tab:
-- Resource source group: honeypot—lab
-- Name: law-honeypot1
-- Region: West US 2 (**screenshot is incorrect; choose West US 2**)
+- Under the Basics tab
+- Resource source group
+- Name
+- Region
 - Click Review + Create and click Create
 
 ## Step 6A: Enable log collection from vm to log workspace
 - Back in the search bar search and click *Microsoft Defender for Cloud*
-- Once on the dashboard click > Environment Settings > (through the drop down menus) > law-honeypot1
+- Once on the dashboard click > Environment Settings > (through the drop down menus) > log-honeypot-1
 
 ![](images/img15.PNG)
 ![](images/img16.PNG)
 
-## Step 6B: Under law-honeypot1 select *Defender Plans* and enable *Servers* ON and *SQL servers on machines* OFF. With *Cloud Security Posture Management* ON. Hit save.
+## Step 6B: Under log-honeypot-1 select *Defender Plans* and enable *Servers* ON and *SQL servers on machines* OFF. With *Cloud Security Posture Management* ON. Hit save.
 - Under *Data Collection* tab select *All Events*. Hit save.
 
 ![](images/img17.PNG)
@@ -104,7 +104,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 
 ## Step 7: connect Log Analytics workspace to our vm
 - On the search bar select Log Analytics workspace
-- Select law-honeypot1 > Virtual Machines > honeypot-vm
+- Select log-honeypot-11 > Virtual Machines > honeypot-vm
 - Click **connect**, after clicking honeypot-vm
 - It will take some time to successfully connect; you should get a message confirming connection.
 
@@ -113,17 +113,15 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 
 ## Step 8: Add Microsoft Sentinel to our workspace 
 - In search bar find **Microsoft Sentinel**
-- Click Create Microsoft Sentinel > select law-honeypot1 > Add
+- Click Create Microsoft Sentinel > select log-honeypot-11 > Add
 - This will also take some time
 
 ![](images/img21.PNG)
-![](images/img22.PNG)
+
 
 ## Step 9A: Log into vm through host machine
-- Through the search bar, find our honeypot-vm > copy the Public IP address (highlighted here on the right)
-
-![](images/img23.PNG)
-![](images/img24.PNG)
+- Through the search bar, find our honeypot-vm > copy the Public IP address
+![](images/img22.PNG)
 
 
 ## Step 9B: RDP from host Windows machine
@@ -136,7 +134,8 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Then, enter your credentials we created for our Azure vm in Step 3, click OK.
 - Accept the certificate warning
 - You should be logged into the vm when you see “Remote Desktop Connection” at the top of the screen.
-
+![](images/img23.PNG)
+![](images/img24.PNG)
 ![](images/img25.PNG)
 
 
