@@ -186,19 +186,33 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 > NOTE: Keep Powershell script running in the backgroup. We need to continously feed our log repository information.
 
 ![](images/img32.PNG)
+> ProgramData directory is where we will locate our log file after execution
+
 ![](images/img33.PNG)
-![](images/img34.PNG)
+> Intentional login failed attempts by myself to check whether logs are being displayed by the script
+
 ![](images/img35.PNG)
+> failed_rdp filed found in the directory created by our custom Powershell script
+
 ![](images/img36.PNG)
+> Logs being created by ipgeolocation.io API to our designated file
+
 ![](images/img37.PNG)
+> Manually checking the logs that are created by my failed login attempts
+
 ![](images/img38.PNG)
+> Final attempt to login using username darwinLive so that we can track it in Powershell ISE and log file
+
 ![](images/img39.PNG)
+> logs for darwinLive login attempt successfully captured by the script
+
 ![](images/img40.PNG)
+> Confirming the log files whether darwinLive failed login is available for further investigation
 
 
 ## Step 12A: Create custom geolocation log in Log Analytics Workspace.
 - This log will use IP information to give us specific geolocation to our create map down the line.
-- Search and click Log Analytics Workspace > law-honeypot1 > custom logs > + Add custom log
+- Search and click Log Analytics Workspace > log-honeypot-1 > custom logs > + Add custom log
 - We need to upload a sample log to “train” log analytics on what to look for.
 
 ![](images/img41.PNG)
@@ -217,7 +231,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 
 ![](images/img44.PNG)
 
-## Step 12D: Click next > under Details > Custom log name write FAILED_RDP_WITH_GEO (CL will be added to the end)
+## Step 12D: Click next > under Details > Custom log name write FAILED_RDP_WITH_GEOLOCATION (CL will be added to the end)
 - Click next > Create >Review + Create
 - Let’s go back to log analytics and check if Azure is connected and listening to our vm.
 
@@ -226,20 +240,23 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 ## Step 12E: Secure connection between honeypot-vm and log analytics 
 - Under law-honeypot1 > General > Logs > search SecurityEvent and click blue Run button.
 - Give it a moment, and voila! It returns the same security logs window from our honeypot-vm’s Event Viewer.
-- Give it some time and search our custom: `FAILED_RDP_WITH_GEO_CL will` it will return our sample logs.
+- Give it some time and search our custom: `FAILED_RDP_WITH_GEOLOCATION_CL will` it will return our sample logs.
 
 ![](images/img46.PNG)
 
  
 ## Step 13A: Overview: Extract geo-data from the RawData of our sample logs.
-- Take a look at our sample logs in our FAILED_RDP_WITH_GEO_CL.
+- Take a look at our sample logs in our FAILED_RDP_WITH_GEOLOCATION_CL.
 - In the RawData columns we find information like longitude, latitude, destination host, etc.
 - We need to categorize longitude, latitude, destination host, etc. **values** from the raw data before we can obtain  geolocation data.
 - It sounds a bit abstract now, but bare with me.
 > NOTE: If you step away and come back to this lab after a day or two make sure to change the *Time range* accordingly. 
 
 ![](images/img47.PNG)
+> Quering the logs using EventID == 4625 which signals failed logins
+
 ![](images/img48.PNG)
+> Now quering the logs using the custom logs we created above
 
 
 ## Step 13B: Extract and categorize data from sample log
