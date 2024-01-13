@@ -301,52 +301,34 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Next, we will map out our logs within Sentinel with the extracted data - to see where in the world is our vm is being attacked from.
 - Search and click Microsoft Sentinel > choose law-honeypot1 and under Threat management choose *Workbooks* > click + Add workbook
 - Click edit > click the “ … “ on the right side on the screen and remove the two widgets.
-- Click Add > Add query and paste the following into the query:
+- Click Add > Add query and paste the following into the query
 
-`FAILED_RDP_WITH_GEO_CL | summarize event_count=count() by sourcehost_CF, latitude_CF, longitude_CF, country_CF, label_CF, destinationhost_CF
-| where destinationhost_CF != "samplehost"
-| where sourcehost_CF != ""`
-
-![](images/img52.PNG)
+![](images/img53.PNG)
+![](images/img54.PNG)
 
 
 > This will parse through the failed RDP’s logs and return to us location information through our custom fields we created.
 
-> The last two lines will ensure we DON’T receive anything with sample host or anything blank.
-
 ## Step 14B: Threat visualization
 - Click Run Query
-- Troubleshooting: if you run into any issue with a CF (custom field) try removing the troubling CF from the query and run search again.
 - From the visualization drop box select *Map*
 - In map settings > layout setting (on the right of screen):
-- Under Location Info Using Select longitude/latitude (if longitude/latitude gives you trouble select *country or region*, and vice versa)
-- Under latitude: latitude_CF
-- Under longitude: longitude_CF
-- Scroll down to find Metric Settings:
-- Under Metric Label select label_CF
-- Metric Value: event_count
-- Hit Apply …
+- Configure the map according to your requirements
 - On the map you see where you’re being attacked from!
 - You might only see the failed logins you made, but after some time refresh and look again.
-- Pretty rad - **if you take a look at the actual logs you can see source IP, time, country, user name and other details!**
+- Tip - **if you take a look at the actual logs you can see source IP, time, country, user name and other details!**
 - Remember too, these logs are only reporting back failed RDP attempts… who knows what other attacks are being attempted.  
 
-![](images/img53.PNG)
-![](images/img54.PNG)
 ![](images/img55.PNG)
-![](images/img56.PNG)
 
 
 ## Step 14C: Finish/save threat visualization 
 - Hit > save and close
-- Hit the floppy disk at the top to save the map.
-- Title: Failed RDP World Map > Location: West US 2 > Resource group: honeypot-lab > click Apply
 - And we’re done! - by now people should be attacking your vm, congrats!
 - You can hit the refresh icon near the top of the map (**make sure Powershell script is running**) to load more logs into the map
 - Also, you can click Auto refresh ON to refresh every so often.
 
-![](images/img57.PNG)
-![](images/img58.PNG)
+![](images/img56.PNG)
 
 ## FINAL STEP: Deprovision resources 
 - Once you are done with the lab delete the resources, otherwise they will eat away from your free credit (deprovisioning is also a good thing to keep in mind at the enterprise level)
