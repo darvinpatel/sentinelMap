@@ -134,10 +134,11 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Then, enter your credentials we created for our Azure vm in Step 3, click OK.
 - Accept the certificate warning
 - You should be logged into the vm when you see “Remote Desktop Connection” at the top of the screen.
-- 
+
 ![](images/img23.PNG)
 ![](images/img24.PNG)
 ![](images/img25.PNG)
+
 > Please note that I have used Microsoft Remote Desktop to RDP into my VM as my host machine is Mac OS X
 
 ## Step 10A: Set up vm and explore 
@@ -162,9 +163,11 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Try to ping vm again from your **host** machine - this should now work!
 
 ![](images/img29.PNG)
-> Before when Firewalls were in default state of ON
+
+> Before when Firewalls were in the default state of ON
 
 ![](images/img30.PNG)
+
 > After when Firewalls were turned off intentionally
 
 ## Step 11A: Retrieve Powershell script: [Script](https://github.com/darvinpatel/sentinelMap/blob/main/Custom_Security_Log_Exporter.ps1 "Script")
@@ -186,27 +189,35 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 > NOTE: Keep Powershell script running in the backgroup. We need to continously feed our log repository information.
 
 ![](images/img32.PNG)
+
 > ProgramData directory is where we will locate our log file after execution
 
 ![](images/img33.PNG)
+
 > Intentional login failed attempts by myself to check whether logs are being displayed by the script
 
 ![](images/img35.PNG)
+
 > failed_rdp filed found in the directory created by our custom Powershell script
 
 ![](images/img36.PNG)
+
 > Logs being created by ipgeolocation.io API to our designated file
 
 ![](images/img37.PNG)
+
 > Manually checking the logs that are created by my failed login attempts
 
 ![](images/img38.PNG)
+
 > Final attempt to login using username darwinLive so that we can track it in Powershell ISE and log file
 
 ![](images/img39.PNG)
+
 > logs for darwinLive login attempt successfully captured by the script
 
 ![](images/img40.PNG)
+
 > Confirming the log files whether darwinLive failed login is available for further investigation
 
 
@@ -253,57 +264,34 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 > NOTE: If you step away and come back to this lab after a day or two make sure to change the *Time range* accordingly. 
 
 ![](images/img47.PNG)
-> Quering the logs using EventID == 4625 which signals failed logins
+
+> Querying the logs using EventID == 4625 which signals failed logins
 
 ![](images/img48.PNG)
-> Now quering the logs using the custom logs we created above
+
+> Now querying the logs using the custom logs we created above
 
 
-## Step 13B: Extract and categorize data from sample log
-- Right-click the first log you see in the search results and click Extract Fields from FAILED_RDP_WITH_GEO_CL
-- Under Main Example highlight the latitude VALUE - not the word ‘latitude’ itself
-- A window will automatically pop-up
-- Under Field value type latitude and under Filed type choose numeric, click Extract
-- To the right, check that the SIEM is selecting the correct values on each sample log.
-- Click save extraction. 
+## Step 13B: Extract and categorize data from the sample log
+- Use the KQL custom query to extract fields that we will use to send it to the map
 
 ![](images/img49.PNG)
 
 > This is an important step because we are ‘training’ our SIEM what to look out for. 
 
-## Step 13C: Extracting more data from sample log
-- Same process, different values.
-- Right-click the same log > Extract files from… 
-- Now this time highlight *longitude value*
-- Field value: longitude > filed type: numeric, click Extract
-- Inside our search results it looks like our SIEM needs some help because it highlighted latitude when we were asking for LONGITUDE (bad siem).
-- Worry not: this is where some corrective training comes into play.
-- Click the little pencil within a circle icon at the top-right of the incorrect search result.
-- Click modify this highlight and highlight the **longitude** value once more.
-- Again: Field value: longitude > filed type: numeric, click Extract
-- Take a look at the search result, it should now highlight the correct longitude value.
-- Continue to train our SIEM and correct a few more search results.
+## Step 13C: Check if the KQL query can capture the most recent entry
+- Have another failed login to your VM and check the PowerShell results
+![](images/img51.PNG)
+
+> darwinFinalFAIL captured
+
+## Step 13D: Check LAW for the login attempt
+- After succesfully observing the failed log we check the entry in our LAW > logs
+- Run the KQL again
 
 ![](images/img50.PNG)
 
-## Step 13D: Even more data extraction from sample log!
-- The same process to when we extracted latitude and longitude values.
-- Remember to highlight the *vaules* and to select the correct field value and field type
-- Right-click the same log > Extract files from… 
-- Highlight destination host value > filed title: destinationhost > type: text 
-- Re-select vales if needed and save
-- Remember to save after each selection - you can’t select more than one value at a time
-- Highlight user name value > filed title: username > type: text 
-- Highlight source host value > filed title: sourcehost > type: text 
-- Highlight state value > filed title: state > type: text 
-- Highlight country value > filed title: country > type: text 
-- Highlight label value > filed title: label > type: text 
-- Highlight timestamp value > filed title: timestamp > type: Date/Time
-- Hit save extraction for the final time and we’re done extracting!
-- Under setting columns to the left click Custom Logs > Custom fields
-- Your custom fields we just made should look something like this:
-
-![](images/img51.PNG)
+> darwinFinalFAIL captured and categorised appoproately
 
 > A couple of notes before moving on: **make sure our Powershell script log_exporter.log is running**. The script will continue to feed our SIEM with fresh new logs. 
 
