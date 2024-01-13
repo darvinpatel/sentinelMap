@@ -39,7 +39,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 ![](images/img2.PNG)
 
 ## Step 2: Create our honey pot virtual machine
-- In the search bar of the “Quickstart Center” page > search and click virtual machine 
+- In the search bar, search and click virtual machine 
 - This will be the honey pot virtual machine made to entice attackers from all over the world
 
 ![](images/img3.PNG)
@@ -56,7 +56,6 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Finally, check confirm box - leaving the rest in their default options  
 
 ![](images/img10.PNG)
-![](images/img11.PNG)
 
 ## Step 4: Click > Next: Disk but leave it as is, click to continue to Networking
 -  Under *NIC network security group* select > Advance and under *Configure network security group* select Create new
@@ -69,6 +68,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Leave the rest of the settings as default
 - Click Add > OK > Review + create - wait a bit to load and click Create
 
+![](images/img11.PNG)
 ![](images/img12.PNG)
 
 > The point of this new firewall rule is to allow any traffic from anywhere.  This will make our virtual machine very discoverable. 
