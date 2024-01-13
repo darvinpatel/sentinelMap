@@ -163,6 +163,7 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 
 ![](images/img29.PNG)
 > Before when Firewalls were in default state of ON
+
 ![](images/img30.PNG)
 > After when Firewalls were turned off intentionally
 
