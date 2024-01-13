@@ -134,10 +134,11 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Then, enter your credentials we created for our Azure vm in Step 3, click OK.
 - Accept the certificate warning
 - You should be logged into the vm when you see “Remote Desktop Connection” at the top of the screen.
+- 
 ![](images/img23.PNG)
 ![](images/img24.PNG)
 ![](images/img25.PNG)
-
+> Please note that I have used Microsoft Remote Desktop to RDP into my VM as my host machine is Mac OS X
 
 ## Step 10A: Set up vm and explore 
 - Click NO to all privacy settings and Accept
@@ -161,7 +162,9 @@ SIEM stands for Security Information and Event Management System. It is a soluti
 - Try to ping vm again from your **host** machine - this should now work!
 
 ![](images/img29.PNG)
+> Before when Firewalls were in default state of ON
 ![](images/img30.PNG)
+> After when Firewalls were turned off intentionally
 
 ## Step 11A: Retrieve Powershell script: [Script](https://github.com/joshmadakor1/Sentinel-Lab/blob/main/Custom_Security_Log_Exporter.ps1 "Script")
 - Open Powershell ISE
